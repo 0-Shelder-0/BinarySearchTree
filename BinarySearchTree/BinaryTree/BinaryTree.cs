@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BinarySearchTree.BinaryTree
 {
@@ -121,6 +123,22 @@ namespace BinarySearchTree.BinaryTree
                 return true;
             }
             return false;
+        }
+
+        public void Serialize(Stream serializationStream)
+        {
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(serializationStream, _root);
+        }
+
+        public void Deserialize(Stream serializationStream)
+        {
+            var formatter = new BinaryFormatter();
+            var obj = formatter.Deserialize(serializationStream);
+            if (obj is TreeNode<TKey, TValue> root)
+            {
+                _root = root;
+            }
         }
 
         public TValue this[TKey key]
@@ -256,15 +274,18 @@ namespace BinarySearchTree.BinaryTree
 
         private IEnumerable<TreeNode<TKey, TValue>> GetItemsRecursively(TreeNode<TKey, TValue> current)
         {
-            if (current.Left != null)
+            if (current?.Left != null)
             {
                 foreach (var node in GetItemsRecursively(current.Left))
                 {
                     yield return node;
                 }
             }
-            yield return current;
-            if (current.Right != null)
+            if (current != null)
+            {
+                yield return current;
+            }
+            if (current?.Right != null)
             {
                 foreach (var node in GetItemsRecursively(current.Right))
                 {

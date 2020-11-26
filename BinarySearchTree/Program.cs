@@ -1,4 +1,6 @@
-﻿using BinarySearchTree.BinaryTree;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using BinarySearchTree.BinaryTree;
 
 namespace BinarySearchTree
 {
@@ -6,16 +8,18 @@ namespace BinarySearchTree
     {
         private static void Main()
         {
-            var tree = new BinaryTree<int, int>();
-            tree.Add(5, 0);
-            tree.Add(2, 0);
-            tree.Add(1, 0);
-            tree.Add(3, 0);
-            tree.Add(7, 0);
-            tree.Add(6, 0);
-            tree.Add(8, 0);
+            var t = new BinaryTree<int, int>();
 
-            tree.Remove(7);
+            var tree = new BinaryTree<int, int>
+            {
+                {5, 0},
+                {2, 0},
+                {1, 0},
+                {3, 0},
+                {7, 0},
+                {6, 0},
+                {8, 0}
+            };
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace BinarySearchTree.BinaryTree
 {
+    [Serializable]
     public class TreeNode<TKey, TValue>
     {
         public KeyValuePair<TKey, TValue> KeyValuePair { get; set; }
