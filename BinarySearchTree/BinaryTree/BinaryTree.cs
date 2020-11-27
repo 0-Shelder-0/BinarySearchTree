@@ -48,6 +48,7 @@ namespace BinarySearchTree.BinaryTree
 
         public void Clear()
         {
+            Count = 0;
             _root = null;
         }
 
@@ -127,6 +128,10 @@ namespace BinarySearchTree.BinaryTree
 
         public void Serialize(Stream serializationStream)
         {
+            if (_root == null)
+            {
+                return;
+            }
             var formatter = new BinaryFormatter();
             formatter.Serialize(serializationStream, _root);
         }
@@ -138,6 +143,7 @@ namespace BinarySearchTree.BinaryTree
             if (obj is TreeNode<TKey, TValue> root)
             {
                 _root = root;
+                Count = Keys.Count;
             }
         }
 
@@ -157,9 +163,12 @@ namespace BinarySearchTree.BinaryTree
                 var node = Search(key);
                 if (node == null)
                 {
-                    throw new KeyNotFoundException($"The given key '{key}' was not present in the BinaryTree.");
+                    Add(key, value);
                 }
-                node.KeyValuePair = new KeyValuePair<TKey, TValue>(key, value);
+                else
+                {
+                    node.KeyValuePair = new KeyValuePair<TKey, TValue>(key, value);
+                }
             }
         }
 
